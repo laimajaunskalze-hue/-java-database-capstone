@@ -70,3 +70,79 @@
 
     If saving fails, show an error message
 */
+
+// 1. Importējam moduļus
+import { openModal } from "./components/modals.js";
+import { getDoctors, filterDoctors, saveDoctor } from "./services/doctorServices.js";
+import { createDoctorCard } from "./components/doctorCard.js";
+
+const contentDiv = document.getElementById("content");
+
+// 2. Ielādējam ārstus, kad lapa ir gatava
+document.addEventListener("DOMContentLoaded", () => {
+    loadDoctorCards();
+    
+    // Piesaistām "Add Doctor" pogu
+    const addDocBtn = document.getElementById('addDocBtn');
+    if (addDocBtn) {
+        addDocBtn.addEventListener('click', () => openModal('addDoctor'));
+    }
+
+    // Meklēšanas un filtru klausītāji
+    document.getElementById("searchBar").addEventListener("input", filterDoctorsOnChange);
+    document.getElementById("filterTime").addEventListener("change", filterDoctorsOnChange);
+    document.getElementById("filterSpecialty").addEventListener("change", filterDoctorsOnChange);
+});
+
+// Funkcija visu ārstu ielādei
+async function loadDoctorCards() {
+    contentDiv.innerHTML = ""; 
+    const doctors = await getDoctors();
+    renderDoctorCards(doctors);
+}
+
+// Filtru apstrāde
+async function filterDoctorsOnChange() {
+    const name = document.getElementById("searchBar").value;
+    const time = document.getElementById("filterTime").value;
+    const specialty = document.getElementById("filterSpecialty").value;
+
+    const doctors = await filterDoctors(name, time, specialty);
+    contentDiv.innerHTML = "";
+    if (doctors.length > 0) {
+        renderDoctorCards(doctors);
+    } else {
+        contentDiv.innerHTML = "<p>No doctors found</p>";
+    }
+}
+
+function renderDoctorCards(doctors) {
+    doctors.forEach(doctor => {
+        const card = createDoctorCard(doctor);
+        contentDiv.appendChild(card);
+    });
+}
+
+// 3. Jauna ārsta pievienošana
+window.adminAddDoctor = async function () {
+    const token = localStorage.getItem("token");
+    if (!token) return alert("Please login first");
+
+    const doctorData = {
+        name: document.getElementById("docName").value,
+        specialty: document.getElementById("docSpecialty").value,
+        email: document.getElementById("docEmail").value,
+        mobile: document.getElementById("docMobile").value,
+        availability: Array.from(document.querySelectorAll('input[name="availability"]:checked')).map(cb => cb.value)
+    };
+
+    const result = await saveDoctor(doctorData, token);
+    if (result.success) {
+        alert("Doctor added successfully!");
+        location.reload(); // Atsvaidzinām sarakstu
+    } else {
+        alert("Error: " + result.message);
+    }
+};
+
+//update

@@ -52,3 +52,53 @@
     - Call renderContent() (assumes it sets up the UI layout)
     - Call loadAppointments() to display today's appointments by default
 */
+
+import { getPatientAppointments } from "./services/patientServices.js";
+import { createPatientRow } from "./components/patientRows.js";
+
+const tableBody = document.getElementById("patientTableBody");
+let selectedDate = new Date().toISOString().split('T')[0]; // Šodiena
+const token = localStorage.getItem("token");
+let patientName = null;
+
+document.addEventListener("DOMContentLoaded", () => {
+    loadAppointments();
+
+    // Filtru uzstādīšana
+    document.getElementById("todayButton")?.addEventListener("click", () => {
+        selectedDate = new Date().toISOString().split('T')[0];
+        document.getElementById("datePicker").value = selectedDate;
+        loadAppointments();
+    });
+
+    document.getElementById("datePicker")?.addEventListener("change", (e) => {
+        selectedDate = e.target.value;
+        loadAppointments();
+    });
+
+    document.getElementById("searchBar")?.addEventListener("input", (e) => {
+        patientName = e.target.value || "null";
+        loadAppointments();
+    });
+});
+
+async function loadAppointments() {
+    try {
+        tableBody.innerHTML = "";
+        // Izmantojam dakterim specifisko ID (pieņemam, ka tas ir saglabāts pie login)
+        const doctorId = localStorage.getItem("userId"); 
+        const appointments = await getPatientAppointments(doctorId, token, "doctor");
+
+        if (!appointments || appointments.length === 0) {
+            tableBody.innerHTML = "<tr><td colspan='5'>No Appointments found for today</td></tr>";
+            return;
+        }
+
+        appointments.forEach(app => {
+            const row = createPatientRow(app);
+            tableBody.appendChild(row);
+        });
+    } catch (error) {
+        tableBody.innerHTML = "<tr><td colspan='5'>Error loading data</td></tr>";
+    }
+}
