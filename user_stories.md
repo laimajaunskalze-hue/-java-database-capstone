@@ -87,3 +87,50 @@ _As an **Admin**, I want to **run a stored procedure to see the number of appoin
 **Priority:** Medium
 **Story Points:** 5
 **Notes:** Requires `CALL get_monthly_appointments();` implementation in MySQL.
+
+---
+
+## 7. Doctor Discovery
+**Title:** Public Access to Doctor Directory
+_As a **Patient**, I want to **view a list of doctors without logging in**, so that **I can explore available options before deciding to register**._
+
+**Acceptance Criteria:**
+1. The public directory must be accessible from the landing page.
+2. The list must display doctor names, specialties, and experience levels.
+3. No sensitive contact information should be visible until the user logs in.
+
+**Priority:** Medium
+**Story Points:** 3
+**Notes:** This data is fetched from the MySQL `doctors` table via a public REST endpoint.
+
+---
+
+## 8. Account Creation and Security
+**Title:** Secure Patient Signup and Login
+_As a **Patient**, I want to **sign up and log into the portal using my email and password**, so that **I can securely book and manage my medical appointments**._
+
+**Acceptance Criteria:**
+1. Users must be able to create an account with a unique email and a strong password.
+2. The system must verify credentials against the MySQL `patients` table.
+3. A "Log out" option must be available to terminate the session and secure the account.
+
+**Priority:** High
+**Story Points:** 5
+**Notes:** Passwords must be hashed before storage for security compliance.
+
+---
+
+## 9. Appointment Management
+**Title:** Booking and Viewing Appointments
+_As a **Patient**, I want to **book an hour-long appointment and view my upcoming schedule**, so that **I can consult with a doctor and prepare accordingly**._
+
+**Acceptance Criteria:**
+1. The patient can select a doctor and a specific 1-hour time slot.
+2. Successfully booked appointments must appear in a "My Appointments" view.
+3. The system must prevent double-booking the same time slot for a doctor.
+
+**Priority:** High
+**Story Points:** 8
+**Notes:** Appointment data is stored in MySQL, linking the Patient ID and Doctor ID.
+
+
