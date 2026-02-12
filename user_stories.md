@@ -134,3 +134,49 @@ _As a **Patient**, I want to **book an hour-long appointment and view my upcomin
 **Notes:** Appointment data is stored in MySQL, linking the Patient ID and Doctor ID.
 
 
+---
+
+## 10. Doctor Authentication and Profile
+**Title:** Secure Doctor Access and Profile Management
+_As a **Doctor**, I want to **log in, log out, and update my specialization and contact details**, so that **my data remains secure and patients have up-to-date information about my expertise**._
+
+**Acceptance Criteria:**
+1. The doctor must be able to securely log into the private dashboard.
+2. The doctor can update their specialty and contact phone/email in the MySQL `doctors` table.
+3. A "Log out" button must be present to terminate the session and protect sensitive medical data.
+
+**Priority:** High
+**Story Points:** 5
+**Notes:** Profile updates are reflected in the public directory used by patients.
+
+---
+
+## 11. Schedule and Availability Management
+**Title:** Managing Appointments and Unavailability
+_As a **Doctor**, I want to **view my appointment calendar and mark slots as unavailable**, so that **I can stay organized and ensure patients only book when I am truly available**._
+
+**Acceptance Criteria:**
+1. The dashboard must display a calendar view of all confirmed appointments.
+2. The doctor can select specific hours to mark as "Unavailable" in the MySQL database.
+3. Once marked unavailable, those slots must be hidden from the patient booking view.
+
+**Priority:** High
+**Story Points:** 8
+**Notes:** Availability logic must sync with the Patient booking system in real-time.
+
+---
+
+## 12. Patient Information Access
+**Title:** Review Patient Details for Preparation
+_As a **Doctor**, I want to **view the patient details for upcoming appointments**, so that **I can be fully prepared for the consultation**._
+
+**Acceptance Criteria:**
+1. The doctor can click on an appointment to see the patient's name, age, and medical history.
+2. Patient data must be retrieved from the MySQL `patients` table.
+3. Access to these details must be restricted only to the doctor assigned to that specific appointment.
+
+**Priority:** Medium
+**Story Points:** 5
+**Notes:** This feature is critical for clinical preparation and patient safety.
+
+
