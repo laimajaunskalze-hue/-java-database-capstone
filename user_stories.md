@@ -42,3 +42,48 @@ _As a **Patient**, I want to **book an appointment with a specific doctor**, so 
 **Priority:** Medium
 **Story Points:** 5
 **Notes:** Managed through the MVC/Thymeleaf interface for the dashboard.
+
+---
+
+## 4. Admin Authentication
+**Title:** Secure Admin Login and Logout
+_As an **Admin**, I want to **log in and out of the portal using my credentials**, so that **I can manage the platform securely and protect system access**._
+
+**Acceptance Criteria:**
+1. Admin must provide a valid username and password to enter the portal.
+2. The session must be terminated immediately upon clicking "Log out".
+3. Unauthorized users must be redirected away from administrative pages.
+
+**Priority:** High
+**Story Points:** 3
+**Notes:** Authentication logic is handled by Spring Security.
+
+---
+
+## 5. Doctor Profile Management
+**Title:** Add and Delete Doctor Profiles
+_As an **Admin**, I want to **add and delete doctors from the portal**, so that **the medical staff directory remains accurate and up to date**._
+
+**Acceptance Criteria:**
+1. Admin can add a new doctor by providing name, specialty, and contact info.
+2. Admin can remove a doctor profile which should cascade to their schedules.
+3. Changes must reflect immediately in the MySQL `doctors` table.
+
+**Priority:** High
+**Story Points:** 5
+**Notes:** Deletion requires a confirmation prompt to prevent accidental data loss.
+
+---
+
+## 6. Usage Statistics Reporting
+**Title:** Track Monthly Appointment Statistics
+_As an **Admin**, I want to **run a stored procedure to see the number of appointments per month**, so that **I can track clinic usage statistics**._
+
+**Acceptance Criteria:**
+1. The system must execute a stored procedure in the MySQL CLI.
+2. The output must clearly show total appointments grouped by month.
+3. Data must be retrieved from the relational MySQL database.
+
+**Priority:** Medium
+**Story Points:** 5
+**Notes:** Requires `CALL get_monthly_appointments();` implementation in MySQL.
