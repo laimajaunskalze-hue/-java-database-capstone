@@ -95,3 +95,4 @@ export async function filterAppointments(condition, name, token) {
     return { appointments: [] };
   }
 }
+console.log("Sync check");
